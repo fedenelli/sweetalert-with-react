@@ -7,23 +7,13 @@ import transformer, { bindActions } from '@sweetalert/transformer';
  * Convert <Element /> to pure DOM node using ReactDOM
  * (remember that ReactDOM.render() is async!)
  */
-const getDOMNodeFromJSX = (Element) => {
+const getDOMNodeFromJSX = async (Element) => {
   const wrapper = document.createElement('div');
   const root = createRoot(wrapper);
 
-  return new Promise((resolve) => {
-    function AppWithCallbackAfterRender() {
-      useEffect(() => {
-        const el = wrapper.firstChild;
-
-        return resolve(el);
-      });
-    
-      return Element;
-    }
-
-    root.render(<AppWithCallbackAfterRender />);
-  });
+  await root.render(Element, wrapper);
+  const el = wrapper.firstChild;
+  return el;
 };
 
 const swal = (...params) => (
