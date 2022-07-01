@@ -1,4 +1,5 @@
 import React, { useEffect } from 'react';
+import { flushSync } from 'react-dom';
 import { createRoot } from 'react-dom/client';
 
 import transformer, { bindActions } from '@sweetalert/transformer';
@@ -11,7 +12,8 @@ const getDOMNodeFromJSX = async (Element) => {
   const wrapper = document.createElement('div');
   const root = createRoot(wrapper);
 
-  await root.render(Element, wrapper);
+  flushSync(root.render(Element));
+  
   const el = wrapper.firstChild;
   return el;
 };
