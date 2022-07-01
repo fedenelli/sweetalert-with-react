@@ -1,5 +1,4 @@
-import React from 'react';
-import ReactDOM from 'react-dom';
+import React, { useEffect } from 'react';
 import { createRoot } from 'react-dom/client';
 
 import transformer, { bindActions } from '@sweetalert/transformer';
@@ -20,10 +19,10 @@ const getDOMNodeFromJSX = (Element) => {
         return resolve(el);
       });
     
-      return Element
+      return Element;
     }
 
-    root.render(<AppWithCallbackAfterRender />, root);
+    root.render(<AppWithCallbackAfterRender />);
   });
 };
 
