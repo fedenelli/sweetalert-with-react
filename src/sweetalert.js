@@ -1,5 +1,6 @@
 import React from 'react';
 import ReactDOM from 'react-dom';
+import { createRoot } from 'react-dom/client';
 
 import transformer, { bindActions } from '@sweetalert/transformer';
 
@@ -9,13 +10,20 @@ import transformer, { bindActions } from '@sweetalert/transformer';
  */
 const getDOMNodeFromJSX = (Element) => {
   const wrapper = document.createElement('div');
+  const root = createRoot(wrapper);
 
   return new Promise((resolve) => {
-    ReactDOM.render(Element, wrapper, () => {
-      const el = wrapper.firstChild;
+    function AppWithCallbackAfterRender() {
+      useEffect(() => {
+        const el = wrapper.firstChild;
 
-      return resolve(el);
-    });
+        return resolve(el);
+      });
+    
+      return Element
+    }
+
+    root.render(<AppWithCallbackAfterRender />, root);
   });
 };
 
